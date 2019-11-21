@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="/socket.io/socket.io.js"></script>
-    <title>CHAT</title>
-</head>
-<body>
-    YO
+  <head>
+    <title>Video Chat</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="description" content="Video Chat.">
+    <meta name="author" content="Brian Mau">
+    <link href="/css/main.css" rel="stylesheet">
+  </head>
+  <body>
     <video class="localVideo" playsinline autoplay muted></video>
-    <video class="remoteVideos"></video>
-    <script src="js/index.js"></script>
+    <div class="remoteVideos"></div>
+    <script src='/socket.io/socket.io.js'></script>
+    <script src="/js/index.js"></script>
 </body>
 </html>

@@ -11,13 +11,11 @@ port = 443
 
 app.use(express.static('public'))
 
-let io = socket(server)
+const io = socket(server)
+import socketServices from "./socketServices"
 
-
-io.on('connection', socket => {
-    console.log(socket.id)
-})
+io.on('connection', socketServices(io).listen)
 
 server.listen(port, () => {
-    console.log(`Lisnteing on ${port}`)
+    console.log(`Listening on ${port}`)
 })
