@@ -122,6 +122,30 @@ socket.on("candidate", (id, candidate) => {
     .catch(e => console.error(e));
 });
 
+socket.on("bye", id => {
+  terminateConnection(id);
+});
+
+let terminateConnection = id => {
+  peerConnections[id] && peerConnections[id].close();
+  delete peerConnections[id];
+  let localStream = localVideo.srcObject
+  let tracks = localStream.getTracks()
+  tracks.forEach(track => {
+    track.stop()
+  })
+  localVideo.srcObject = null
+  document
+    .querySelector("#" + id.replace(/[^a-zA-Z]+/g, "").toLowerCase())
+    .remove();
+  if (remoteVideos.querySelectorAll("video").length === 1) {
+    remoteVideos.setAttribute("class", "one remoteVideos");
+  } else {
+    remoteVideos.setAttribute("class", "remoteVideos");
+  }
+
+};
+
 let handleRemoteStreamAdded = (stream, id) => {
   let mediaStream = new MediaStream(stream);
   const remoteVideo = document.createElement("video");
