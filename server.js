@@ -7,7 +7,7 @@ import socketServices from "./socketServices";
 const app = express();
 let port;
 let server = https.createServer(credentials, app);
-port = 443;
+port = 1443;
 
 app.use(express.static("public"));
 
