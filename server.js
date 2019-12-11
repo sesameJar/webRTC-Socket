@@ -5,16 +5,16 @@ import https from "https";
 import socketServices from "./socketServices";
 
 const app = express();
-let port;
+
 let server = https.createServer(credentials, app);
-port = 1440;
 
 app.use(express.static("public"));
+app.set("port", process.env.PORT || 1440);
 
 const io = socket(server);
 
 io.on("connection", socketServices(io).listen);
 
-server.listen(port, () => {
+server.listen(app.get("port"), () => {
   console.log(`Listening on ${port}`);
 });
