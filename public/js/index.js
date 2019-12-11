@@ -2,7 +2,7 @@ let socket = io();
 
 let localVideo = document.querySelector(".localVideo");
 let remoteVideos = document.querySelector(".remoteVideos");
-// let remoteVideoTag = document.getElementById("remoteVideoTag")
+// let remoteVideoTag = document.g     etElementById("remoteVideoTag")
 let submitBtn = document.querySelector(".sendAvatar");
 let avatarTag = document.querySelector("#avatar");
 let usersList = document.querySelector(".usersList");
