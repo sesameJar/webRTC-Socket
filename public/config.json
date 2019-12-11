@@ -1,0 +1,8 @@
+{
+  "name": "videoPlugin",
+  "description": "A p2p video-call app",
+  "url": "http://127.0.0.1:8080",
+  "author": "Mehrad",
+  "config": { "permissions": ["addresses", "avatars", "sign"] },
+  "translation": { "default": { "name": "videoapp" } }
+}

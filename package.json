@@ -5,6 +5,7 @@
   "main": "server.js",
   "dependencies": {
     "express": "^4.17.1",
+    "mvs-lightwallet": "^0.1.0",
     "socket.io": "^2.3.0"
   },
   "devDependencies": {
@@ -15,7 +16,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec babel-node server.js"
+    "server": "nodemon --exec babel-node server.js",
+    "heroku-postbuild": "npm install",
+    "start" : "babel-node server.js"
   },
   "repository": {
     "type": "git",
