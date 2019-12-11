@@ -1,13 +1,13 @@
 let _io;
 let users = {};
 
-let listen = socket => {
+let listen =  function (socket)  {
   const io = _io;
   console.log(socket.id);
   io.sockets.emit("all-users", users);
   console.log(Object.keys(io.sockets.sockets));
 
-  socket.on("avatar", avatar => {
+  socket.on("avatar", function (avatar) {
     users[avatar] = socket.id;
     console.log(users);
     io.sockets.emit("all-users", users);
@@ -18,19 +18,19 @@ let listen = socket => {
   //     socket.broadcast.emit('ready', socket.id)
   // })
 
-  socket.on("offer", (id, message) => {
+  socket.on("offer", function (id, message) {
     socket.to(id).emit("offer", socket.id, message);
   });
 
-  socket.on("answer", (id, message) => {
+  socket.on("answer", function (id, message) {
     socket.to(id).emit("answer", socket.id, message);
   });
 
-  socket.on("candidate", (id, message) => {
+  socket.on("candidate", function (id, message)  {
     socket.to(id).emit("candidate", socket.id, message);
   });
 
-  socket.on("disconnect", () => {
+  socket.on("disconnect", function() {
     socket.broadcast.emit("bye", socket.id);
     console.log(socket.id);
     console.log(Object.keys(io.sockets.sockets));
