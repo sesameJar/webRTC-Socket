@@ -1,4 +1,4 @@
-let socket = io();
+let socket = io("https://localhost:1440");
 
 let localVideo = document.querySelector(".localVideo");
 let remoteVideos = document.querySelector(".remoteVideos");
