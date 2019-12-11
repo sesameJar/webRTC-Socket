@@ -31,5 +31,6 @@
   "bugs": {
     "url": "https://github.com/sesameJar/webRTC-Socket/issues"
   },
-  "homepage": "https://github.com/sesameJar/webRTC-Socket#readme"
+  "homepage": "https://github.com/sesameJar/webRTC-Socket#readme",
+  "engines": {"node" : "8"}
 }
