@@ -1,5 +1,4 @@
-let socket = io();
-
+let socket = io("https://localhost:443");
 let localVideo = document.querySelector(".localVideo");
 let remoteVideos = document.querySelector(".remoteVideos");
 // let remoteVideoTag = document.getElementById("remoteVideoTag")
@@ -19,6 +18,7 @@ const constraints = {
 };
 
 socket.on("ready", async id => {
+  console.log("hit");
   if (!(localVideo instanceof HTMLVideoElement) || !localVideo.srcObject) {
     return;
   }

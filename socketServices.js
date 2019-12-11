@@ -5,7 +5,8 @@ let listen = socket => {
   console.log(socket.id, "socket.id");
   socket.on("ready", () => {
     console.log("READY", socket.id);
-    socket.broadcast.emit("ready", socket.id);
+    // socket.broadcast.emit("ready", socket.id);
+    io.sockets.emit("ready", socket.id);
   });
 
   socket.on("offer", (id, message) => {
