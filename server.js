@@ -21,5 +21,5 @@ const io = socket(server);
 io.on("connection", socketServices(io).listen);
 
 server.listen(process.env.PORT || 1440, function() {
-  console.log(`Listening on ${port}`);
+  console.log('Listening on 1440');
 });
