@@ -2,23 +2,24 @@ let socket = io()
 
 let localVideo = document.querySelector('.localVideo')
 let remoteVideos = document.querySelector('.remoteVideos')
-let remoteVideoTag = document.getElementById("remoteVideoTag")
 let submitBtn = document.querySelector('.sendAvatar')
-// let avatarTag = document.querySelector('#avatar')
 let usersList = document.querySelector('.usersList')
-let avatarList = document.getElementById("avatarList")
+let avatarList = document.getElementById('avatarList')
 let peerConnections = {}
 
 var lightwallet = new Lightwallet({ target: '*' })
 lightwallet
 	.getAvatars()
-	.then(avatars => avatars.forEach(avatar => {
-		console.log(avatar)
-		let option = document.createElement("option")
-		option.value = avatar.symbol
-		option.text = avatar.symbol
-		avatarList.appendChild(option)
-	}))
+	.then(avatars => {
+		console.log(avatars.length)
+		avatars.forEach(avatar => {
+			console.log(avatar)
+			let option = document.createElement('option')
+			option.value = avatar.symbol
+			option.text = avatar.symbol
+			avatarList.appendChild(option)
+		})
+	})
 	.catch(console.error)
 
 const config = {
@@ -35,16 +36,27 @@ const constraints = {
 }
 
 submitBtn.addEventListener('click', event => {
-	socket.emit('avatar', avatarTag.value)
-	console.log(avatarTag.value)
+	let avatar = avatarList.value
+	socket.emit('avatar', avatar)
+	avatarList.style.display = 'none'
+	submitBtn.style.display = 'none'
+	console.log(avatar)
 })
 
 socket.on('all-users', async users => {
-	console.log("CLIEN : "+users)
+	console.log('CLIENT : ' + users)
 	usersList.innerHTML = ''
 	for (user in users) {
 		let li = document.createElement('li')
-		li.innerHTML = `User ${user} has id : ${users[user]}`
+		let span = document.createElement('span')
+		let clear = document.createElement('span')
+		clear.className = 'clear'
+		const blockie = blockies.create({
+			seed: `${user}`,
+		})
+
+		span.innerHTML = `${user}`
+		li.append(blockie, span, clear)
 		usersList.appendChild(li)
 		li.addEventListener('click', async event => {
 			let id = users[user]
@@ -78,7 +90,7 @@ const createOffer = async id => {
 }
 
 socket.on('offer', async (id, offer) => {
-	console.log('OFFER CLIENT',id)
+	console.log('OFFER CLIENT', id)
 
 	if (!(localVideo instanceof HTMLVideoElement) || !localVideo.srcObject) {
 		await getMediaDevices(id)

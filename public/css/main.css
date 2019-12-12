@@ -1,3 +1,18 @@
+@font-face {
+	font-family: 'pixelar';
+	src: url('fonts/pixelare.eot');
+	src: url('fonts/pixelare.eot?#iefix') format('embedded-opentype'),
+		url('fonts/pixelare.woff') format('woff'),
+		url('fonts/pixelare.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+html,
+body {
+	font-family: 'pixelar', monospace;
+}
+
 html {
 	overflow: hidden;
 	height: 100%;
@@ -34,6 +49,10 @@ html {
 }
 body {
 	background-color: black;
+	background-image: url('../assets/home_bg.jpg');
+	background-repeat: repeat;
+	background-attachment: fixed;
+	background-size: cover;
 	margin: 0;
 	height: 100%;
 	width: 100%;
@@ -46,6 +65,38 @@ body {
 
 .usersList {
 	color: white;
+	list-style: none;
+	width: 60vw;
+	margin: 0 auto;
+}
+
+.usersList > li {
+	display: block;
+	line-height: 32px;
+	margin-bottom: 10px;
+}
+
+.usersList > li canvas {
+	border-radius: 50%;
+	float: left;
+	margin-right: 10px;
+}
+
+.usersList > li span {
+	float: left;
+}
+
+.usersList > li > span.clear {
+	clear: both;
+	overflow: hidden;
+	width: 0 !important;
+	height: 0 !important;
+	min-height: 0 !important;
+	min-width: 0 !important;
+	border: 0 none !important;
+	float: none !important;
+	margin: 0 none !important;
+	display: block !important;
 }
 
 .usersList,
