@@ -1,0 +1,10 @@
+{
+	"name": "chatplugin",
+	"description": "An app that basically can't do shit",
+	"url": "https://172.168.2.113",
+	"author": "Goddamn Mehrad",
+	"config": {
+		"permissions": ["addresses", "avatars", "sign", "create-mit", "unlock"]
+	},
+	"translation": { "default": { "name": "chatplugin" } }
+}

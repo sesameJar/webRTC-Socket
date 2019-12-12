@@ -1,20 +1,20 @@
-import express from "express";
-import socket from "socket.io";
-import credentials from "./credentials";
-import https from "https";
-import socketServices from "./socketServices";
+import express from 'express'
+import socket from 'socket.io'
+import credentials from './credentials'
+import https from 'https'
+import socketServices from './socketServices'
 
-const app = express();
-let port;
-let server = https.createServer(credentials, app);
-port = 443;
+const app = express()
+let port
+let server = https.createServer(credentials, app)
+port = 443
 
-app.use(express.static("public"));
+app.use(express.static('public'))
 
-const io = socket(server);
+const io = socket(server)
 
-io.on("connection", socketServices(io).listen);
+io.on('connection', socketServices(io).listen)
 
 server.listen(port, () => {
-  console.log(`Listening on ${port}`);
-});
+	console.log(`Listening on ${port}`)
+})
