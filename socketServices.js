@@ -13,7 +13,7 @@ let listen = socket => {
 	})
 
 	socket.on('offer', (id, message) => {
-		console.log('OFFER SERVER', id, message)
+		console.log('OFFER SERVER',socket.id, id, message)
 		socket.to(id).emit('offer', socket.id, message)
 	})
 

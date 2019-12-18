@@ -11,9 +11,7 @@ var lightwallet = new Lightwallet({ target: '*' })
 lightwallet
 	.getAvatars()
 	.then(avatars => {
-		console.log(avatars.length)
 		avatars.forEach(avatar => {
-			console.log(avatar)
 			let option = document.createElement('option')
 			option.value = avatar.symbol
 			option.text = avatar.symbol
@@ -44,7 +42,7 @@ submitBtn.addEventListener('click', event => {
 })
 
 socket.on('all-users', async users => {
-	console.log('CLIENT : ' + users)
+	console.log('CLIENT :', users)
 	usersList.innerHTML = ''
 	for (user in users) {
 		let li = document.createElement('li')
@@ -60,6 +58,8 @@ socket.on('all-users', async users => {
 		usersList.appendChild(li)
 		li.addEventListener('click', async event => {
 			let id = users[user]
+			console.log(users[user])
+			console.log('li id', id)
 			await getMediaDevices(id)
 			await createOffer(id)
 		})
@@ -67,9 +67,13 @@ socket.on('all-users', async users => {
 })
 
 const createOffer = async id => {
+	console.log('CREATE OFFER', 1)
 	if (!(localVideo instanceof HTMLVideoElement) || !localVideo.srcObject) {
+		console.log('CREATE OFFER', 3)
+
 		await getMediaDevices(id)
 	}
+	console.log('CREATE OFFER', 2)
 
 	const peerConnection = new RTCPeerConnection(config)
 	peerConnections[id] = peerConnection
@@ -87,6 +91,7 @@ const createOffer = async id => {
 			socket.emit('candidate', id, event.candidate)
 		}
 	}
+	console.log(1)
 }
 
 socket.on('offer', async (id, offer) => {
@@ -95,7 +100,7 @@ socket.on('offer', async (id, offer) => {
 	if (!(localVideo instanceof HTMLVideoElement) || !localVideo.srcObject) {
 		await getMediaDevices(id)
 	}
-
+	console.log('OFFER AFTER IF')
 	const peerConnection = new RTCPeerConnection(config)
 	peerConnections[id] = peerConnection
 	peerConnection.addStream(localVideo.srcObject)
@@ -107,7 +112,7 @@ socket.on('offer', async (id, offer) => {
 	socket.emit('answer', id, peerConnection.localDescription)
 	peerConnection.onaddstream = event =>
 		handleRemoteStreamAdded(event.stream, id)
-	peerConnection.onicecandidate = function(event) {
+	peerConnection.onicecandidate = event => {
 		if (event.candidate) {
 			socket.emit('candidate', id, event.candidate)
 		}
