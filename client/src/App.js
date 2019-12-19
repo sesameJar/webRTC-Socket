@@ -1,11 +1,25 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import logo from './logo.svg'
 import io from 'socket.io-client'
+import lightWallet from 'mvs-lightwallet'
 import './App.css'
 
 function App() {
+	const [userAvatars, setUserAvatars] = useState([])
 	useEffect(() => {
-		const socket = io('localhost:443')
+		const LightWallet = new lightWallet({ target: '*' })
+		LightWallet.getAvatars()
+			.then(avatars => setUserAvatars(avatars))
+			.catch(console.error)
+		const socket = io('https://localhost')
+		socket.on('all-users', users => {
+			console.log(users)
+		})
+
+		return () => {
+      socket.close()
+      socket.off()
+		}
 	}, [])
 	return (
 		<div className="App">

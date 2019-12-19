@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "mvs-lightwallet": "^0.1.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-emoji": "^0.5.0",
@@ -33,5 +34,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "react-dev-tools-iframe-webpack-plugin": "^1.0.2"
   }
 }
