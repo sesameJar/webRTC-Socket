@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Button from '@material-ui/core/Button'
 import Avatar from '@material-ui/core/Avatar'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -10,9 +9,8 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import Dialog from '@material-ui/core/Dialog'
 // import PersonIcon from '@material-ui/icons/Person'
 import { Link } from 'react-router-dom'
-import Typography from '@material-ui/core/Typography'
 
-function AvatarDialog(props) {
+export default function AvatarDialog(props) {
 	const { onClose, selectedValue, open, avatars } = props
 
 	const handleClose = () => {
@@ -40,10 +38,10 @@ function AvatarDialog(props) {
 						key={avatar.symbol}
 					>
 						<Link to="/call">
-							<ListItemAvatar>
-								<Avatar>{/* <PersonIcon /> */}</Avatar>
-							</ListItemAvatar>
-							<ListItemText primary={avatar.symbol} />
+						<ListItemAvatar>
+							<Avatar>{/* <PersonIcon /> */}</Avatar>
+						</ListItemAvatar>
+						<ListItemText primary={avatar.symbol} />
 						</Link>
 					</ListItem>
 				))}
@@ -57,41 +55,4 @@ AvatarDialog.propTypes = {
 	open: PropTypes.bool.isRequired,
 	selectedValue: PropTypes.string.isRequired,
 	avatars: PropTypes.array.isRequired,
-}
-
-export default function SelectAvatar({ avatars }) {
-	console.log(avatars[0])
-	const [open, setOpen] = React.useState(false)
-	const [selectedValue, setSelectedValue] = React.useState(avatars[0].symbol)
-
-	const handleClickOpen = () => {
-		setOpen(true)
-	}
-
-	const handleClose = value => {
-		setOpen(false)
-		setSelectedValue(value)
-	}
-
-	return (
-		<div>
-			<Typography variant="subtitle1">
-				Selected: {selectedValue}
-			</Typography>
-			<br />
-			<Button
-				variant="outlined"
-				color="primary"
-				onClick={handleClickOpen}
-			>
-				Choose Your Avatar
-			</Button>
-			<AvatarDialog
-				selectedValue={selectedValue}
-				open={open}
-				onClose={handleClose}
-				avatars={avatars}
-			/>
-		</div>
-	)
 }
