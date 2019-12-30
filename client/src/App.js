@@ -3,15 +3,19 @@ import io from 'socket.io-client'
 import lightWallet from 'mvs-lightwallet'
 import Container from '@material-ui/core/Container'
 import AvatarDialog from './components/AvatarDialog'
-import { Router, Switch, Route } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
+import UsersList from './components/UsersList'
+import Call from './components/Call'
 import './App.css'
 
 function App() {
 	const [userAvatars, setUserAvatars] = useState([])
-	const [selectedValue, setSelectedValue] = React.useState(null)
-	const [open, setOpen] = React.useState(false)
+	const [onlineAvatars, setOnlineAvatars] = useState([])
+	const [selectedValue, setSelectedValue] = useState(null)
+	const [open, setOpen] = useState(false)
+
 	// const [isLoading, setIsLoading] = useState(false)
 
 	const handleClickOpen = () => {
@@ -22,25 +26,37 @@ function App() {
 		setOpen(false)
 		setSelectedValue(value)
 	}
-
+	let socket = io('https://localhost')
 	useEffect(() => {
+		console.log(1)
+
 		const LightWallet = new lightWallet({ target: '*' })
 		LightWallet.getAvatars()
 			.then(avatars => {
-				setUserAvatars(avatars)
 				setSelectedValue(avatars[0].symbol)
+				setUserAvatars(avatars)
 			})
 			.catch(console.error)
-		const socket = io('https://localhost')
-		socket.on('all-users', users => {
-			console.log(users)
-		})
 
+		socket.on('all-users', users => {
+			let onlineUsersArray = []
+			for (let user in users) {
+				onlineUsersArray.push({ avatar: user, id: users[user] })
+			}
+
+			setOnlineAvatars([...onlineUsersArray])
+		})
 		return () => {
 			socket.emit('disconnect')
 			socket.off()
 		}
 	}, [])
+
+	useEffect(() => {
+		if (selectedValue) {
+			socket.emit('setAvatar', selectedValue)
+		}
+	}, [selectedValue])
 	return (
 		<div className="App">
 			<Container maxWidth="md">
@@ -68,8 +84,9 @@ function App() {
 				) : (
 					'Loading'
 				)}
+				{onlineAvatars.length ? <UsersList avatars={onlineAvatars} /> : ''}
 				<Switch>
-					<Route path="/call" render={() => <div>HEY</div>} />
+					<Route path="/call" render={() => <Call>HEY</Call>} />
 				</Switch>
 			</Container>
 		</div>

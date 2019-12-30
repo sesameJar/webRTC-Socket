@@ -9,6 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import Dialog from '@material-ui/core/Dialog'
 // import PersonIcon from '@material-ui/icons/Person'
 import { Link } from 'react-router-dom'
+import Blockies from 'react-blockies'
 
 export default function AvatarDialog(props) {
 	const { onClose, selectedValue, open, avatars } = props
@@ -28,7 +29,7 @@ export default function AvatarDialog(props) {
 			open={open}
 		>
 			<DialogTitle id="simple-dialog-title">
-				Avatars found in your wallet :
+				Avatars found in your wallet:
 			</DialogTitle>
 			<List>
 				{avatars.map(avatar => (
@@ -37,11 +38,16 @@ export default function AvatarDialog(props) {
 						onClick={() => handleListItemClick(avatar.symbol)}
 						key={avatar.symbol}
 					>
-						<Link to="/call">
 						<ListItemAvatar>
-							<Avatar>{/* <PersonIcon /> */}</Avatar>
+							<Avatar>
+								<Blockies seed={avatar.symbol} />
+							</Avatar>
 						</ListItemAvatar>
-						<ListItemText primary={avatar.symbol} />
+						<Link
+							to="/call"
+							style={{ color: '#444', textDecoration: 'none' }}
+						>
+							<ListItemText primary={avatar.symbol} />
 						</Link>
 					</ListItem>
 				))}

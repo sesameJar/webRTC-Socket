@@ -6,7 +6,8 @@ let listen = socket => {
 	const io = _io
 	// io.sockets.emit('all-users', users)
 
-	socket.on('avatar', avatar => {
+	socket.on('setAvatar', avatar => {
+		
 		users[avatar] = socket.id
 		console.log(users)
 		io.sockets.emit('all-users', users)
@@ -25,12 +26,13 @@ let listen = socket => {
 		socket.to(id).emit('candidate', socket.id, message)
 	})
 
-	// socket.on('disconnect', () => {
-	//     socket.broadcast.emit('bye', socket.id)
-	//     let key = Object.keys(users).find(objKey => users[objKey] === socket.id)
-	//     delete users[key]
-	//     io.sockets.emit('all-users', users)
-	// })
+	socket.on('disconnect', () => {
+		console.log("DISCONNECT")
+	    // socket.broadcast.emit('bye', socket.id)
+	    let key = Object.keys(users).find(objKey => users[objKey] === socket.id)
+	    delete users[key]
+	    io.sockets.emit('all-users', users)
+	})
 }
 
 module.exports = function(io) {
