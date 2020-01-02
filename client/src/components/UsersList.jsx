@@ -26,7 +26,7 @@ export default function FolderList({ avatars }) {
 						</Avatar>
 					</ListItemAvatar>
 					<Link
-						to="/call"
+						to={`/call/${avatar.id}`}
 						style={{ textDecoration: 'none', color: '#444' }}
 					>
 						<ListItemText primary={avatar.avatar} secondary={avatar.id} />

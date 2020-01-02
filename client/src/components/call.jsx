@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react'
 import io from 'socket.io-client'
+import { useParams } from 'react-router-dom'
 
 const Call = ({ emitOffer }) => {
+	let { remoteId } = useParams()
 	const localVideo = useRef()
 	const remoteVideo = useRef()
 
@@ -62,14 +64,23 @@ const Call = ({ emitOffer }) => {
 		}
 	}
 
-	useEffect(async () => {
+	useEffect(() => {
 		socket = io('https://localhost')
 
-		await getUserMedia()
-		await createOffer()
+		getUserMedia()
+		createOffer()
 	}, [])
 
-	useEffect(()=>{},[])
+	// useEffect(() => {
+	// 	console.log("Offer Effect")
+	// 	socket.on('offer', () => {
+	// 		console.log('OFFER IN APP')
+	// 	})
+	// 	return () => {
+	// 		socket.on('disconnect')
+	// 		socket.off()
+	// 	}
+	// }, [peerConnections])
 
 	return (
 		<>

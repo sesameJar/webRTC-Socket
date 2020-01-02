@@ -26,10 +26,19 @@ function App() {
 		setOpen(false)
 		setSelectedValue(value)
 	}
-	let socket = io('https://localhost')
+	let socket
 	useEffect(() => {
-		console.log(1)
+		socket = io('https://localhost')
+		if (selectedValue) {
+			socket.emit('setAvatar', selectedValue)
 
+			socket.on('offer', () => {
+				console.log('Offer in APPJS')
+			})
+		}
+		socket.on('offer', async offer => {
+			console.log('OFFER IN APPJS')
+		})
 		const LightWallet = new lightWallet({ target: '*' })
 		LightWallet.getAvatars()
 			.then(avatars => {
@@ -46,17 +55,15 @@ function App() {
 
 			setOnlineAvatars([...onlineUsersArray])
 		})
+	}, [selectedValue])
+
+	useEffect(() => {
 		return () => {
 			socket.emit('disconnect')
 			socket.off()
 		}
 	}, [])
 
-	useEffect(() => {
-		if (selectedValue) {
-			socket.emit('setAvatar', selectedValue)
-		}
-	}, [selectedValue])
 	return (
 		<div className="App">
 			<Container maxWidth="md">
@@ -86,7 +93,7 @@ function App() {
 				)}
 				{onlineAvatars.length ? <UsersList avatars={onlineAvatars} /> : ''}
 				<Switch>
-					<Route path="/call" render={() => <Call>HEY</Call>} />
+					<Route path="/call/:remoteId" render={() => <Call>HEY</Call>} />
 				</Switch>
 			</Container>
 		</div>
